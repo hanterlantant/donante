@@ -1,0 +1,37 @@
+{
+    "name": "donante-server",
+    "version": "1.0.0",
+    "description": "Manage your donations and donators",
+    "author": "Andreas Hellmann <hanterlantant@posteo.de>",
+    "license": "MIT",
+    "main": "src/main.ts",
+    "scripts": {
+        "start": "npm run build && node ./build/main.js",
+        "start:dev": "env NODE_ENV=development npm run build && node ./build/main.js",
+        "prettier": "prettier --config .prettierrc 'src/**/*.ts' --write",
+        "build": "tsc --build tsconfig.json",
+        "lint": "eslint -c .eslintrc.js --ext .ts src"
+    },
+    "devDependencies": {
+        "@types/body-parser": "^1.19.0",
+        "@types/express": "^4.17.3",
+        "@types/node": "^13.9.1",
+        "@typescript-eslint/eslint-plugin": "^2.24.0",
+        "@typescript-eslint/parser": "^2.24.0",
+        "eslint": "^6.8.0",
+        "eslint-config-prettier": "^6.10.0",
+        "eslint-plugin-prettier": "^3.1.2",
+        "nodemon": "^2.0.2",
+        "prettier": "^1.19.1",
+        "ts-node": "^8.6.2",
+        "typescript": "^3.8.3"
+    },
+    "dependencies": {
+        "@types/iban": "0.0.30",
+        "body-parser": "^1.19.0",
+        "express": "^4.17.1",
+        "iban": "0.0.14",
+        "nano": "^8.2.2",
+        "ts-generic-builder": "^1.0.1"
+    }
+}
