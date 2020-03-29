@@ -32,6 +32,6 @@
         "express": "^4.17.1",
         "iban": "0.0.14",
         "nano": "^8.2.2",
-        "ts-generic-builder": "^1.0.1"
+        "ts-generic-builder": "^1.0.2"
     }
 }

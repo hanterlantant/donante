@@ -1,27 +1,50 @@
-import { Builder, Validatable } from 'ts-generic-builder';
+import { DomainBuilder, Validatable } from 'ts-generic-builder';
 
-export class AddressVo implements Validatable {
-    public readonly street?: string;
-    public readonly housenumber?: string;
-    public readonly postalCode?: string;
-    public readonly city?: string;
-    public readonly country?: string;
+interface Address extends Validatable {
+    readonly street?: string;
+    readonly housenumber?: string;
+    readonly postalCode?: string;
+    readonly city?: string;
+    readonly country?: string;
+}
+export class AddressVo implements Address {
+    private _street?: string;
+    private _housenumber?: string;
+    private _postalCode?: string;
+    private _city?: string;
+    private _country?: string;
 
-    constructor(builder: Builder<AddressVo> & AddressVo) {
-        this.street = builder.street;
-        this.housenumber = builder.housenumber;
-        this.postalCode = builder.postalCode;
-        this.city = builder.city;
-        this.country = builder.country;
+    constructor(builder: DomainBuilder<Address, AddressVo> & Address) {
+        this._street = builder.street;
+        this._housenumber = builder.housenumber;
+        this._postalCode = builder.postalCode;
+        this._city = builder.city;
+        this._country = builder.country;
+    }
+
+    get street(): string | undefined {
+        return this._street;
+    }
+    get housenumber(): string | undefined {
+        return this._housenumber;
+    }
+    get postalCode(): string | undefined {
+        return this._postalCode;
+    }
+    get city(): string | undefined {
+        return this._city;
+    }
+    get country(): string | undefined {
+        return this._country;
     }
 
     validate(): boolean {
         let result = true;
-        result = result && this.street != null ? this.street.trim().length > 0 : result;
-        result = result && this.housenumber != null ? this.housenumber.trim().length > 0 : result;
-        result = result && this.postalCode != null ? this.postalCode.trim().length > 0 : result;
-        result = result && this.city != null ? this.city.trim().length > 0 : result;
-        result = result && this.country != null ? this.country.trim().length > 0 : result;
+        result = result && this._street != null ? this._street.trim().length > 0 : result;
+        result = result && this._housenumber != null ? this._housenumber.trim().length > 0 : result;
+        result = result && this._postalCode != null ? this._postalCode.trim().length > 0 : result;
+        result = result && this._city != null ? this._city.trim().length > 0 : result;
+        result = result && this._country != null ? this._country.trim().length > 0 : result;
 
         return result;
     }

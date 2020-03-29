@@ -1,30 +1,54 @@
-import { Builder, Validatable } from 'ts-generic-builder';
-import { PersonEntity } from './person-entity';
+import { DomainBuilder } from 'ts-generic-builder';
+import { Person, PersonEntity } from './person-entity';
 
-export class NaturalPersonEntity extends PersonEntity implements Validatable {
-    public readonly title?: string;
-    public readonly degree?: string;
-    public readonly firstname?: string;
-    public readonly surname?: string;
-    public readonly birthday?: Date;
+interface NaturalPerson extends Person {
+    readonly title?: string;
+    readonly degree?: string;
+    readonly firstname?: string;
+    readonly surname?: string;
+    readonly birthday?: Date;
+}
 
-    constructor(builder: Builder<NaturalPersonEntity> & NaturalPersonEntity) {
+export class NaturalPersonEntity extends PersonEntity implements NaturalPerson {
+    private _title?: string;
+    private _degree?: string;
+    private _firstname?: string;
+    private _surname?: string;
+    private _birthday?: Date;
+
+    constructor(builder: DomainBuilder<NaturalPerson, NaturalPersonEntity> & NaturalPerson) {
         super(builder);
 
-        this.title = builder.title;
-        this.degree = builder.degree;
-        this.firstname = builder.firstname;
-        this.surname = builder.surname;
-        this.birthday = builder.birthday;
+        this._title = builder.title;
+        this._degree = builder.degree;
+        this._firstname = builder.firstname;
+        this._surname = builder.surname;
+        this._birthday = builder.birthday;
+    }
+
+    get title(): string | undefined {
+        return this._title;
+    }
+    get degree(): string | undefined {
+        return this._degree;
+    }
+    get firstname(): string | undefined {
+        return this._firstname;
+    }
+    get surname(): string | undefined {
+        return this._surname;
+    }
+    get birthday(): Date | undefined {
+        return this._birthday;
     }
 
     validate(): boolean {
         let result = true;
-        result = result && this.title != null ? this.title.trim().length > 0 : result;
-        result = result && this.degree != null ? this.degree.trim().length > 0 : result;
-        result = result && this.firstname != null ? this.firstname.trim().length > 0 : result;
-        result = result && this.surname != null ? this.surname.trim().length > 0 : result;
-        result = result && this.birthday != null ? this.birthday < new Date() : result;
+        result = result && this._title != null ? this._title.trim().length > 0 : result;
+        result = result && this._degree != null ? this._degree.trim().length > 0 : result;
+        result = result && this._firstname != null ? this._firstname.trim().length > 0 : result;
+        result = result && this._surname != null ? this._surname.trim().length > 0 : result;
+        result = result && this._birthday != null ? this._birthday < new Date() : result;
 
         return result;
     }

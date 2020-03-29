@@ -1,18 +1,26 @@
-import { Builder, Validatable } from 'ts-generic-builder';
-import { PersonEntity } from './person-entity';
+import { DomainBuilder } from 'ts-generic-builder';
+import { Person, PersonEntity } from './person-entity';
 
-export class LegalPersonEntity extends PersonEntity implements Validatable {
-    public readonly name?: string;
+interface LegalPerson extends Person {
+    readonly name?: string;
+}
 
-    constructor(builder: Builder<LegalPersonEntity> & LegalPersonEntity) {
+export class LegalPersonEntity extends PersonEntity implements LegalPerson {
+    private _name?: string;
+
+    constructor(builder: DomainBuilder<LegalPerson, LegalPersonEntity> & LegalPerson) {
         super(builder);
 
-        this.name = builder.name;
+        this._name = builder.name;
+    }
+
+    get name(): string | undefined {
+        return this._name;
     }
 
     validate(): boolean {
         let result = true;
-        result = result && this.name != null ? this.name.trim().length > 0 : result;
+        result = result && this._name != null ? this._name.trim().length > 0 : result;
 
         return result;
     }
